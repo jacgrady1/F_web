@@ -11,7 +11,7 @@ class Nav extends React.Component {
             var link = links[name];
 
             if (selected && selected.name === name) {
-                className = 'pure-menu-selected';
+                className = 'active';
             }
 
             return (
@@ -22,9 +22,11 @@ class Nav extends React.Component {
         });
 
         return (
-            <ul className="pure-menu pure-menu-open pure-menu-horizontal">
-                {linkHTML}
-            </ul>
+            <div className = 'navbar navbar-default navbar-static-top' >
+                <ul className="nav navbar-nav">
+                    {linkHTML}
+                </ul>
+            </div>
         );
     }
 }

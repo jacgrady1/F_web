@@ -6,11 +6,18 @@ export default {
         title: 'Home',
         handler: require('../components/Home')
     },
-    about: {
-        path: '/about',
+    video: {
+        path: '/video',
         method: 'get',
-        page: 'about',
-        title: 'About',
-        handler: require('../components/About')
+        page: 'video',
+        title: 'Video',
+        handler: require('../components/Video')
+    },
+    audio: {
+        path: '/audio',
+        method: 'get',
+        page: 'audio',
+        title: 'Audio',
+        handler: require('../components/Audio')
     }
 };
