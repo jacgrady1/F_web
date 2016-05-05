@@ -11,6 +11,14 @@ class Audio extends React.Component {
                             <audio controls ref="music" src="http://www.alexkatz.me/codepen/music/interlude.mp3">
                             <p>Your browser does not support the <code>audio</code> element </p>
                             </audio>
+                            <div id="audioplayer">
+                                    <button type="button" className="btn btn-default" aria-label="Left Align">
+                                        <span className="glyphicon glyphicon-play" aria-hidden="true"></span>
+                                    </button>
+                                <div ref="timeline" id="timeline" onClick={this.onTimelineClick}>
+                                            <div ref="playhead" className="playhead"></div>
+                                    </div>
+                            </div>
                         </div>
                     </div>
                 </div>
