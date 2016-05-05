@@ -1,12 +1,16 @@
 import React from 'react';
-
+import ReactPlayer from 'react-player';
 class Home extends React.Component {
+    handleClick() {
+        this.refs.player.seekTo(1000.1);
+    }
     render() {
         return (
             <div>
                 <div className = 'row'>
                     <div className = 'col-md-6 col-md-offset-3'>
-                        <iframe width="800" height="500" src="https://www.youtube.com/embed/Rpzn_fK7SsM" frameBorder="0" allowFullScreen></iframe>
+                        <ReactPlayer url='https://www.youtube.com/watch?v=_r9w3hE0s0U' playing ref='player'/>
+                        <button onClick={this.handleClick.bind(this)}> seekToButton</button>
                     </div>
                 </div>
             </div>
