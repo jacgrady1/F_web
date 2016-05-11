@@ -45,6 +45,7 @@
         "grunt-contrib-jshint": "^1.0.0",
         "json-loader": "^0.5.1",
         "nodemon": "^1.2.1",
+        "pre-commit": "^1.1.2",
         "react-hot-loader": "^1.2.8",
         "shelljs": "^0.5.3",
         "webpack": "^1.12.4",
