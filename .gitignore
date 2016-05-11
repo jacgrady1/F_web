@@ -8,5 +8,5 @@
 .DS_Store
 *.map
 /build/
-/public/stylesheets/
+./public/stylesheets/
 /results/
