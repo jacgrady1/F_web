@@ -23,6 +23,7 @@ const debug = debugLib('f-web');
 
 const server = express();
 server.use('/public', express['static'](path.join(__dirname, '/build')));
+server.use('/assets', express['static'](path.join(__dirname, '/public')));
 server.use(compression());
 server.use(bodyParser.json());
 

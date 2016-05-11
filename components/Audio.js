@@ -28,18 +28,3 @@ class Audio extends React.Component {
 }
 
 export default Audio;
-
-
-// <div id="audioplayer">
-//        <button id="pButton" ref="pButton" className="play" onClick={this.play} ></button>
-//         <div ref="timeline" id="timeline" onClick={this.onTimelineClick}>
-//                 <div ref="playhead" className="playhead"></div>
-//                 <Listanchors items={this.state.anchorItems} />
-//         </div>
-//
-//
-// </div>
-// <div className="row">
-//     <LauncherButton onLauncherClick={this.handleLauncherClick}/>
-//     <LauncherInput onInputChange={this.handleInputChange}/>
-// </div>
