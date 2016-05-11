@@ -9,5 +9,4 @@
 *.map
 /build/
 /public/stylesheets/
-/protractor-batch-artifacts/
 /results/
