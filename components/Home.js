@@ -2,7 +2,6 @@ import React from 'react';
 
 class Home extends React.Component {
     render() {
-        const A = "abcd";
         return (
             <div>
                 <div className = 'row'>
