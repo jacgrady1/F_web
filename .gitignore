@@ -1,6 +1,6 @@
 *.log
 /artifacts/
-/node_modules/
+node_modules/
 /components-dist/
 .sass-cache/
 *.swp
