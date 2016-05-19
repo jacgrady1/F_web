@@ -6,6 +6,7 @@
   "scripts": {
     "build": "grunt clean; grunt babel; grunt atomizer; webpack && webpack --config webpack.config.production.js",
     "dev": "npm run build; node webpack-dev-server.js",
+    "deploy": "npm install; npm run dev",
     "lint": "eslint ./components/*.js",
     "start": "node start.js"
   },
