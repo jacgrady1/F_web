@@ -1,16 +1,14 @@
 import React from 'react';
-
+import AudioPlayer from './AudioPlayer';
 class Home extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <div>
-                <div className = 'row'>
-                    <div className = 'col-md-6 col-md-offset-3'>
-                        <div className = 'W(100px) Fz(20px)' >
-                            abc
-                        </div>
-                    </div>
-                </div>
+                <AudioPlayer />
             </div>
         );
     }
