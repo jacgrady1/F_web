@@ -22,20 +22,18 @@ class Audioplayer extends React.Component {
     renderButton() {
         if (this.state.playing === true) {
             return (<div>
-                        <MdPause className="pause Fz(200%) Scale(2.0, 2.0)" onClick={this.handlePlayClicked} />
+                        <MdPause className="pause Fz(200%) Scale(2.0, 2.0) Fl(start)" onClick={this.handlePlayClicked} />
                     </div>);
         } else {
             return (<div>
-                        <MdPlayArrow className="play Fz(200%) Scale(2.0, 2.0)" onClick={this.handlePlayClicked} />
+                        <MdPlayArrow className="play Fz(200%) Scale(2.0, 2.0) Fl(start)" onClick={this.handlePlayClicked} />
                     </div>);
         }
     }
     renderTimeLine() {
-    //     border-radius: 15px;
-	// background: rgba(0,0,0,.3);
     // dark color #26a69a
-        return (<div id="timeline" className = "W(400px) H(20px) Mt(20px) Fl(start) Bdrs(15px) Bgc(#acece6)" onClick={this.onTimelineClick}>
-                    <div ref="playhead" className="playhead"></div>
+        return (<div id="timeline" className = "W(400px) H(10px) Mt(10px) Fl(start) Bdrs(15px) Bgc(#acece6)" onClick={this.onTimelineClick}>
+                    <div className="playhead W(8px) H(8px) Bdrs(50%) Mt(1px) Bgc(#333)"></div>
                 </div>);
     }
     render() {
@@ -51,7 +49,6 @@ class Audioplayer extends React.Component {
                             <div id="audioplayer">
                                 {this.renderButton()}
                                 {this.renderTimeLine()}
-
                             </div>
                         </div>
                     </div>
