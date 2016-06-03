@@ -8,7 +8,7 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-                <AudioPlayer />
+                <AudioPlayer src="/assets/music/hrzj.mp3"/>
             </div>
         );
     }
