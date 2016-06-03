@@ -5,44 +5,84 @@ class Audioplayer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            playing: false,
-            src: props.src
+            title: props.trackTitle,
+            srcMp3: props.srcMp3,
+            srcOgg: props.oggSource,
+            isPlaying: props.isPlaying ? true : false,
+            currentTime: 0,
+            duration: 0,
+            volume: props.volume ? props.volume : 0.7,
+            isMute: props.isMute ? props.isMute : false
         };
         this.handlePlayClicked = this.handlePlayClicked.bind(this);
-    }
-    handlePlayClicked () {
-        var music = this.refs.music;
-        if (music.paused) {
-            music.play();
-            this.setState({playing: true});
-        } else {
-            music.pause();
-            this.setState({playing: false});
-        }
+        this.updateProgress = this.updateProgress.bind(this);
+        this.handleMediaEnd = this.handleMediaEnd.bind(this);
     }
     componentDidMount() {
         var self = this;
+        var audioElement = self.refs.music;
+        audioElement.volume = self.state.volume;
+        // TODO handle resize
+        audioElement.addEventListener('progress', self.updateProgress);
+        audioElement.addEventListener('timeupdate', self.updateProgress);
+        audioElement.addEventListener('ended', self.handleMediaEnd);
+        self.setState({
+            duration: audioElement.duration
+        });
+    }
+    componentWillUnmount() {
+        var self = this;
+        var audioElement = self.refs.music;
+        audioElement.removeEventListener('progress', self.updateProgress);
+        audioElement.removeEventListener('timeupdate', self.updateProgress);
+        audioElement.removeEventListener('ended', self.handleMediaEnd);
+    }
+    // button change
+    handleMediaEnd() {
+        this.setState({isPlaying: false});
+    }
+    handlePlayClicked () {
+        var self = this;
+        var music = self.refs.music;
+        if (self.state.isPlaying) {
+            music.pause();
+            self.setState({isPlaying: false});
+        } else {
+            music.play();
+            self.setState({isPlaying: true});
+        }
+    }
+    // Synchronizes playhead position with current point in audio
+    updateProgress() {
         var music = this.refs.music;
         var timeline = this.refs.timeline;
         var playhead = this.refs.playhead;
-        var bufferbar = this.refs.bufferbar;
-        music.ontimeupdate = function() {
-            var timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
-            var playPercentWidth = timelineWidth * (music.currentTime / music.duration);
-            var bufferPercentWidth = timelineWidth * (music.buffered.end(0) / music.duration);
-            playhead.style.marginLeft = playPercentWidth + 'px';
-            bufferbar.style.width = bufferPercentWidth + 'px';
-            if (music.currentTime === music.duration) {
-                playhead.style.marginLeft = '0px';
-                self.setState({playing: false});
-            }
-            // console.log(music.currentTime);
-            // console.log(music.duration);
-            // console.log(music.buffered.end(0));
-        };
+        var timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
+        var playPercent = timelineWidth * (music.currentTime / music.duration);
+        playhead.style.marginLeft = playPercent + 'px';
+        //if (music.currentTime == music.duration) {
+            //self.setState({isPlaying: false});
+        //}
+    }
+    // Moves playhead as user drags
+    moveplayhead(e) {
+        var music = this.refs.music;
+        var timeline = this.refs.timeline;
+        var playhead = this.refs.playhead;
+        var timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
+        var newMargLeft = e.pageX - timeline.offsetLeft;
+        if (newMargLeft >= 0 && newMargLeft <= timelineWidth) {
+            playhead.style.marginLeft = newMargLeft + 'px';
+        }
+        if (newMargLeft < 0) {
+            playhead.style.marginLeft = '0px';
+        }
+        if (newMargLeft > timelineWidth) {
+            playhead.style.marginLeft = timelineWidth + 'px';
+        }
     }
     renderButton() {
-        if (this.state.playing === true) {
+        if (this.state.isPlaying === true) {
             return (<div>
                         <MdPause className="pause Fz(200%) Scale(2.0, 2.0) Fl(start)" onClick={this.handlePlayClicked} />
                     </div>);
@@ -57,7 +97,6 @@ class Audioplayer extends React.Component {
             ref: 'playhead',
             className: 'playhead W(8px) Pos(a) H(8px) Bdrs(50%) Mt(1px) Bgc(#333)',
             onMouseDown: function() {
-
             }
         };
         let bufferbarProps = {
@@ -70,13 +109,14 @@ class Audioplayer extends React.Component {
                 </div>);
     }
     render() {
+        console.log(this.state.duration);
         return (
             <div>
                 <div className = 'row'>
                     <div className = 'col-md-6 col-md-offset-3'>
                         <div>
                             <h3>A piece of music</h3>
-                            <audio controls ref="music" src={this.state.src}>
+                            <audio controls ref="music" src={this.state.srcMp3}>
                             <p>Your browser does not support the <code>audio</code> element </p>
                             </audio>
                             <div id="audioplayer">
