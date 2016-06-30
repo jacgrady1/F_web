@@ -1,4 +1,11 @@
 language: node_js
 node_js:
-  - "6"
-  - "0.10"
+- '6'
+- '0.10'
+deploy:
+  provider: releases
+  api_key:
+    secure: N6JgagiehPOdSV1YjXC9V5YEoamFX43YFIqUn2FbXM5kHqQPHjqrXLSQU2hdv0H2Kk/JZ6owxsclB81LWiyeeR7959ESaBaE5JEC6gvXI6w93rhZ+H49cDhvOK+2xXxP30R8FWq39Oc78NRfYC2oWrU/Mq509MNM5BHeTOYun9FMYsISLg/xRi86DPc5WLqfnBe1Ejdz1wYhgemj4DH45yGieUyoe5EQaHgnNXaCUQEe9yfQVJalKladVRt1av59q/2AlSa61mYhdygOLsr2yLk/VXA819TssM41A2OLAau/u3AqoOwotSE78SeiybhqovRXCXb1iyywPoAUpUQmSe5i8beetRTcyTVuJcecnu+jizgmYR+TZRnPxArRauXFRndyhIxccR9kEk5rbcr3e3EiZ0yKn8lv8VK/ciFFxGucem9LA3MFUWn0t4QBPEg41zR4hIvGYqbSiu4hy4rQWxCrBhcqang6yEwkEndrZ6UsGZbH1htgxK1R7XgkPuCnWSe553aA9gTTjuWofyOSIAg9B0Dkhfn4Rz1VEiyJqE13elOPBuqDHV4sA6HLXQi1GSJ5oTZboch2bAyVs17KQtkw3rJJLkckb6ATJR3CXJZx36r4GePf/0UNfAb35GLUuHpCV/kbHluZADQMxU0wQ6Vn9LHcjHvdrY99ESXzjm8=
+  file: ''
+  on:
+    repo: jacgrady1/F_web
