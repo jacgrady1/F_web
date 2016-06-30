@@ -9,5 +9,4 @@ deploy:
   file: '*'
   skip_cleanup: true
   on:
-    tags: true
     repo: jacgrady1/F_web
