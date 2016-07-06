@@ -1,7 +1,12 @@
 *.log
 /artifacts/
+node_modules/
+/components-dist/
 .sass-cache/
 *.swp
 *.node
 .DS_Store
 *.map
+/build/
+/public/stylesheets/
+/results/
