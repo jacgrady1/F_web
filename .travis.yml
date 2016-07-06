@@ -10,6 +10,7 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
+sudo: required
 deploy:
   provider: heroku
   api_key:
@@ -17,3 +18,5 @@ deploy:
   app: tftrocks
   on:
     repo: jacgrady1/F_web
+after_deploy:
+    - npm run build
