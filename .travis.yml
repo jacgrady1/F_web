@@ -18,5 +18,6 @@ deploy:
   skip_cleanup: true
   run:
     - "npm run build"
+    - restart
   on:
     repo: jacgrady1/F_web
