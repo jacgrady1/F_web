@@ -8,5 +8,4 @@ node_modules/
 .DS_Store
 *.map
 /build/
-/public/stylesheets/
 /results/

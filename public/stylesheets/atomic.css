@@ -1,0 +1,48 @@
+#atomic .Bdrs\(50\%\) {
+  border-radius: 50%;
+}
+#atomic .Bdrs\(15px\) {
+  border-radius: 15px;
+}
+#atomic .Bgc\(\#333\) {
+  background-color: #333;
+}
+#atomic .Bgc\(\#26a69a\) {
+  background-color: #26a69a;
+}
+#atomic .Bgc\(\#acece6\) {
+  background-color: #acece6;
+}
+#atomic .Fl\(start\) {
+  float: left;
+}
+#atomic .Fz\(200\%\) {
+  font-size: 200%;
+}
+#atomic .H\(8px\) {
+  height: 8px;
+}
+#atomic .H\(10px\) {
+  height: 10px;
+}
+#atomic .Mt\(1px\) {
+  margin-top: 1px;
+}
+#atomic .Mt\(10px\) {
+  margin-top: 10px;
+}
+#atomic .Pos\(a\) {
+  position: absolute;
+}
+#atomic .Pos\(r\) {
+  position: relative;
+}
+#atomic .W\(8px\) {
+  width: 8px;
+}
+#atomic .W\(0px\) {
+  width: 0px;
+}
+#atomic .W\(400px\) {
+  width: 400px;
+}
