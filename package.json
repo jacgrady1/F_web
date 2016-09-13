@@ -59,7 +59,6 @@
     "webpack-dev-server": "^1.6.5"
   },
   "precommit": [
-    "lint",
-    "build"
+    "lint"
   ]
 }
