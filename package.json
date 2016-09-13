@@ -40,6 +40,7 @@
     "babel-preset-react": "^6.5.0",
     "bundle-loader": "^0.5.0",
     "eslint": "^0.24.0",
+    "flightplan": "^0.6.14",
     "grunt": "^1.0.1",
     "grunt-atomizer": "^3.0.2",
     "grunt-babel": "^6.0.0",
