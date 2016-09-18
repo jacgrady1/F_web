@@ -9,7 +9,7 @@ var tmpDir = appName + '-' + new Date().getTime();
 plan.target('prod', [{
         host: '47.88.105.108',
         username: username,
-        password: 'LGX262lgx262!',
+        password: '',
         agent: process.env.SSH_AUTH_SOCK
     },
     //add in another server if you have more than one
@@ -39,7 +39,7 @@ plan.remote(function(remote) {
     remote.log('Move folder to root');
     remote.sudo('cp -R /tmp/' + tmpDir + ' ~', {user: username});
     remote.rm('-rf /tmp/' + tmpDir);
-    
+
     remote.log('Install dependencies');
     remote.sudo('npm --production --prefix ~/' + tmpDir + ' install ~/' + tmpDir, {
         user: username
