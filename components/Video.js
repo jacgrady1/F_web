@@ -1,20 +1,47 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
+import VideoActions from '../actions/VideoActions';
 class Video extends React.Component {
-    handleClick() {
-        this.refs.player.seekTo(1000.1);
+
+    constructor(props, context) {
+        super(props);
+        //this.context = context.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleInputPress = this.handleInputPress.bind(this);
     }
+
+    handleClick() {
+        console.log('clicked test');
+    }
+
+    handleInputPress(e) {
+        if (e.key === 'Enter') {
+            let url = e.target.value;
+            this.context.executeAction(VideoActions.downloadYTVideo, {url: url});
+        }
+    }
+
     render() {
         return (
-            <div>
+            <div className="container">
                 <h2>Video</h2>
-                <p>Welcome to the site!</p>
-                <ReactPlayer url='https://www.youtube.com/watch?v=_r9w3hE0s0U' playing ref='player'/>
-                <button onClick={this.handleClick.bind(this)}> seekToButton</button>
-                <button className='btn btn-lg btn-primary'> Primay </button>
+                    <div className="row">
+                        <div className="col-md-4">
+                            <input type="text"
+                                className="form-control"
+                                onKeyPress={this.handleInputPress}
+                                placeholder="Enter Youtube URL" />
+                        </div>
+                    </div>
+                <button className='btn btn-primary' onClick={this.handleClick}> Test </button>
             </div>
         );
     }
 }
+
+Video.contextTypes = {
+    getStore: React.PropTypes.func.isRequired,
+    executeAction: React.PropTypes.func.isRequired
+};
 
 export default Video;

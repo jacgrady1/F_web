@@ -17,18 +17,38 @@ import ReactDOM from 'react-dom/server';
 import app from './app';
 import HtmlComponent from './components/Html';
 import { createElementWithContext } from 'fluxible-addons-react';
+
+//services
+import ytdlService from './services/ytdlService';
+
 const env = process.env.NODE_ENV;
 
 const debug = debugLib('f-web');
 
 const server = express();
-server.use('/public', express['static'](path.join(__dirname, '/build')));
-server.use('/assets', express['static'](path.join(__dirname, '/public')));
+
+// Get access to the fetchr plugin instance
+const fetchrPlugin = app.getPlugin('FetchrPlugin');
+
+// Register our services
+fetchrPlugin.registerService(ytdlService);
+
 server.use(compression());
 server.use(bodyParser.json());
 
+server.use('/public', express['static'](path.join(__dirname, '/build')));
+server.use('/assets', express['static'](path.join(__dirname, '/public')));
+// Set up the fetchr middleware
+server.use(fetchrPlugin.getXhrPath(), fetchrPlugin.getMiddleware());
+
 server.use((req, res, next) => {
-    const context = app.createContext();
+    const context = app.createContext({
+       req: req, // The fetchr plugin depends on this
+       debug: (req.query.debug === "true") // needed to enable devtools
+       // xhrContext: {
+       //     _csrf: req.csrfToken() // Make sure all XHR requests have the CSRF token
+       // }
+    });
 
     debug('Executing navigate action');
     context.getActionContext().executeAction(navigateAction, {

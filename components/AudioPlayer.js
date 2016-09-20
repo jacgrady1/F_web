@@ -109,7 +109,6 @@ class Audioplayer extends React.Component {
                 </div>);
     }
     render() {
-        console.log(this.state.duration);
         return (
             <div>
                 <div className = 'row'>
