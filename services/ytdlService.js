@@ -24,9 +24,10 @@ export default {
                 video.pipe(fs.createWriteStream(__dirname + '/../public/videoInput/' + fileName));
                 video.on('end', function() {
                     console.log('finished downloading!');
+                    console.log(__dirname + '/../public/videoInput/' + fileName);
                     callback(null, {
                       title: fileTitle,
-                      url: __dirname + '/../public/videoInput/' + fileName
+                      url: fileName
                   });
               });
             }

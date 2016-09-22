@@ -5,7 +5,6 @@ class Video extends React.Component {
 
     constructor(props, context) {
         super(props);
-        //this.context = context.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleInputPress = this.handleInputPress.bind(this);
     }
@@ -32,6 +31,11 @@ class Video extends React.Component {
                                 onKeyPress={this.handleInputPress}
                                 placeholder="Enter Youtube URL" />
                         </div>
+                    </div>
+                    <div>
+                        <video width="320" height="240" controls>
+                            <source src="/assets/videoInput/TDwJDRbSYbw.mp4" type="video/mp4" />
+                        </video>
                     </div>
                 <button className='btn btn-primary' onClick={this.handleClick}> Test </button>
             </div>
