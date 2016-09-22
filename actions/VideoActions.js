@@ -15,16 +15,11 @@ export default {
             }
             context.service.read('ytdlService', params, {}, function(err, data) {
             if (err) {
-                // context.dispatch('APPLICATION_ERROR', {
-                //     statusCode: err.statusCode,
-                //     message: "load season error",
-                //     serviceName: 'seasonService'
-                // });
                 console.log("service err: ", err);
                 done();
                 return;
             } else {
-
+                let fileName = data;
             }
             done();
         });

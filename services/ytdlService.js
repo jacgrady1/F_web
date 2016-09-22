@@ -12,8 +12,8 @@ export default {
             }
         };
         console.log(__dirname);
-        // TODO: save the public or save to aliyun. 
-        youtubedl(params.url, ytdlConf).pipe(fs.createWriteStream(fileName));
+        // TODO: save the public or save to aliyun.
+        youtubedl(params.url, ytdlConf).pipe(fs.createWriteStream(__dirname + '/../public/videoInput/' + fileName));
         console.log("here");
         callback(null, fileName);
     }
