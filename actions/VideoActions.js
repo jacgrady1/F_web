@@ -8,7 +8,6 @@ export default {
             console.log("file id err");
             done();
         } else  {
-            console.log('fileId: ', fileId);
             let params = {
                 id: fileId,
                 url: payload.url
@@ -19,10 +18,11 @@ export default {
                 done();
                 return;
             } else {
-                // data = {title: 'goodvideo', url: '.../xfdafd.mp4'};
+                // data = {title: 'goodvideo', fileName: '.../xfdafd.mp4'};
+                console.log('data: ', data);
                 context.dispatch('LOAD_VIDEO' ,data);
+                done();
             }
-            done();
         });
         }
 

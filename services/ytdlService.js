@@ -2,14 +2,17 @@
 import fs from 'fs';
 import youtubedl from 'youtube-dl';
 import {fileSizeLimit, fileDurationLimit} from '../configs/configs';
-import _ from 'lodash';
 import {convert2Sec} from '../lib/timeUtils';
+
 export default {
     name: 'ytdlService',
     read: function(req, resource, params, config, callback) {
         let fileName = params.id + '.mp4';
-        youtubedl.getInfo(params.url, ['--format=22'], function(err, info) {
-            if (err) throw err;
+        youtubedl.getInfo(params.url, function(err, info) {
+            if (err) {
+                console.log('err:', err);
+                callback(err, null);
+            }
             let duration = convert2Sec(info.duration);
             let fileTitle = info.title;
             if (duration > fileDurationLimit) {
@@ -24,10 +27,9 @@ export default {
                 video.pipe(fs.createWriteStream(__dirname + '/../public/videoInput/' + fileName));
                 video.on('end', function() {
                     console.log('finished downloading!');
-                    console.log(__dirname + '/../public/videoInput/' + fileName);
                     callback(null, {
                       title: fileTitle,
-                      url: fileName
+                      fileName: fileName
                   });
               });
             }
