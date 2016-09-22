@@ -19,7 +19,8 @@ export default {
                 done();
                 return;
             } else {
-                let fileName = data;
+                // data = {title: 'goodvideo', url: '.../xfdafd.mp4'};
+                context.dispatch('LOAD_VIDEO' ,data);
             }
             done();
         });
