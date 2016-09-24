@@ -18,8 +18,6 @@ export default {
                 done();
                 return;
             } else {
-                // data = {title: 'goodvideo', fileName: '.../xfdafd.mp4'};
-                console.log('data: ', data);
                 context.dispatch('LOAD_VIDEO' ,data);
                 done();
             }

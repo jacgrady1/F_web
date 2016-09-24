@@ -5,30 +5,34 @@ import connectToStores from 'fluxible-addons-react/connectToStores';
 import VideoStore from '../stores/VideoStore';
 
 class Video extends React.Component {
-
     constructor(props, context) {
         super(props);
+        this.state = {
+            fileName: props.fileName,
+            title: props.title
+        };
         this.handleClick = this.handleClick.bind(this);
         this.handleInputPress = this.handleInputPress.bind(this);
     }
     componentWillReceiveProps(nextProps) {
-        //this.setState(this._getState(nextProps));
-        console.log('nextProps: ', nextProps);
+        this.setState({
+            fileName: nextProps.fileName,
+            title: nextProps.title
+        });
+        this.refs.video.load();
+        this.refs.video.play();
     }
     handleClick() {
         console.log('clicked test');
     }
-
     handleInputPress(e) {
         if (e.key === 'Enter') {
             let url = e.target.value;
             this.context.executeAction(VideoActions.downloadYTVideo, {url: url});
         }
     }
-
     render() {
-        let src = '/assets/videoInput/' + this.props.fileName;
-        console.log('src:', src);
+        let src = '/assets/videoInput/' + this.state.fileName;
         return (
             <div className="container">
                 <h2>Video</h2>
@@ -41,7 +45,7 @@ class Video extends React.Component {
                         </div>
                     </div>
                     <div>
-                        <video width="320" height="240" controls>
+                        <video width="320" height="240" ref="video" controls>
                             <source src={src} type="video/mp4" />
                         </video>
                     </div>
@@ -55,35 +59,9 @@ Video.contextTypes = {
     getStore: React.PropTypes.func.isRequired,
     executeAction: React.PropTypes.func.isRequired
 };
-
-// Athletes = connectToStores(Athletes, [AthleteStore, LoadingStore], function(context, props) {
-//     var athleteStore = context.getStore(AthleteStore);
-//     var loadingStore = context.getStore(LoadingStore);
-//     return {
-//         athletes: athleteStore.getAthletes(),
-//         loading: loadingStore.getLoading()
-//     };
-// });
-
 Video = connectToStores(Video, [VideoStore], (context, props) => ({
     title: context.getStore(VideoStore).getTitle(),
     fileName: context.getStore(VideoStore).getFileName()
 }));
 
 export default Video;
-
-// export default connectToStores(
-//     Video,
-//     [VideoStore],
-//      (context, props) => {
-//         let videoStore = context.getStore(VideoStore);
-//         console.log("title: ", videoStore.getTitle());
-//         console.log("fileName: ", videoStore.getFileName());
-//         return {
-//             title: videoStore.getTitle(),
-//             fileName: videoStore.getFileName()
-//         };
-//     }
-// );
-//
-// export default Video;

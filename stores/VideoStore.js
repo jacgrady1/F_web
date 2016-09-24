@@ -9,7 +9,6 @@ class VideoStore extends BaseStore {
     handleVideoLoad (payload) {
         this.fileName = payload.fileName;
         this.title = payload.title;
-        console.log('payload in store: ', payload);
         this.emitChange();
     }
     getTitle() {
