@@ -9,47 +9,113 @@ class Video extends React.Component {
         super(props);
         this.state = {
             fileName: props.fileName,
-            title: props.title
+            title: props.title,
+            outputFileName: props.outputFileName
         };
-        this.handleClick = this.handleClick.bind(this);
-        this.handleInputPress = this.handleInputPress.bind(this);
+        this.handleRenderClick = this.handleRenderClick.bind(this);
+        this.handleInputUrlPress = this.handleInputUrlPress.bind(this);
+        this.handleInputTextChange = this.handleInputTextChange.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
             fileName: nextProps.fileName,
-            title: nextProps.title
+            title: nextProps.title,
+            outputFileName: nextProps.outputFileName
         });
         this.refs.video.load();
-        this.refs.video.play();
+        this.refs.renderedVideo.load();
     }
-    handleClick() {
-        console.log('clicked test');
+    handleRenderClick() {
+        let fileName = this.state.fileName;
+        let text = this.state.text;
+        this.context.executeAction(VideoActions.renderVideo, {
+            text: text,
+            fileName: fileName
+        });
     }
-    handleInputPress(e) {
+    handleDownloadClick() {
+
+    }
+    handleInputUrlPress(e) {
         if (e.key === 'Enter') {
             let url = e.target.value;
             this.context.executeAction(VideoActions.downloadYTVideo, {url: url});
         }
     }
-    render() {
+    handleInputTextChange(e) {
+        this.setState({
+            text: e.target.value
+        });
+    }
+    renderVideo() {
         let src = '/assets/videoInput/' + this.state.fileName;
         return (
-            <div className="container">
-                <h2>Video</h2>
-                    <div className="row">
-                        <div className="col-md-4">
-                            <input type="text"
-                                className="form-control"
-                                onKeyPress={this.handleInputPress}
-                                placeholder="Enter Youtube URL" />
-                        </div>
+            <div>
+                <video width="640" height="360" ref="video" controls muted>
+                    <source src={src} type="video/mp4" />
+                </video>
+            </div>
+        );
+    }
+    renderUrlInputs() {
+        return (
+            <div className="row">
+                <div className="col-md-6">
+                    <input type="text"
+                        className="form-control"
+                        onKeyPress={this.handleInputUrlPress}
+                        placeholder="Enter Youtube URL" />
+                </div>
+            </div>
+        );
+    }
+    renderTextInputs() {
+        if (this.state.fileName) {
+            return (
+                <div className="row">
+                    <div className="col-md-5">
+                        <input type="text"
+                            className="form-control"
+                            onKeyPress={this.handleInputTextChange}
+                            placeholder="Enter text on video" />
                     </div>
+                    <div className="col-md-1">
+                        <button className='btn btn-primary' onClick={this.handleRenderClick}> Render </button>
+                    </div>
+                </div>
+            );
+        } else {
+            return <div/>;
+        }
+    }
+    renderOutPutVideo() {
+        let src = '/assets/videoOutput/' + this.state.outputFileName;
+        if (this.state.outputFileName) {
+            return (
+                <div>
                     <div>
-                        <video width="320" height="240" ref="video" controls>
+                        <video width="640" height="360" ref="renderedVideo" controls muted>
                             <source src={src} type="video/mp4" />
                         </video>
                     </div>
-                <button className='btn btn-primary' onClick={this.handleClick}> Test </button>
+                    <div>
+                        <a className="btn btn-primary" href={src} role="button" download>Download</a>
+                    </div>
+                </div>
+            );
+        } else {
+            return <div/>;
+        }
+
+    }
+    render() {
+        return (
+            <div className="container">
+                <h2>Video</h2>
+                    {this.renderUrlInputs()}
+                    {this.renderVideo()}
+                    {this.renderTextInputs()}
+                    {this.renderOutPutVideo()}
             </div>
         );
     }
@@ -61,7 +127,8 @@ Video.contextTypes = {
 };
 Video = connectToStores(Video, [VideoStore], (context, props) => ({
     title: context.getStore(VideoStore).getTitle(),
-    fileName: context.getStore(VideoStore).getFileName()
+    fileName: context.getStore(VideoStore).getFileName(),
+    outputFileName: context.getStore(VideoStore).getOutputFileName()
 }));
 
 export default Video;
