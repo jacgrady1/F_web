@@ -18,7 +18,7 @@ export default {
             if (error) {
                 callback(error, null);
             } else {
-                fs.unlinkSync(__dirname + '/../public/videoInput/' + payload.fileName);
+                //fs.unlinkSync(__dirname + '/../public/videoInput/' + payload.fileName);
                 callback(null, {
                     fileName: payload.fileName
                 });
