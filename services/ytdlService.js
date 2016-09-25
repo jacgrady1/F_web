@@ -8,14 +8,15 @@ import {execFile} from 'child_process';
 export default {
     name: 'ytdlService',
     create: function create(req, resource, params, payload, config, callback){
-        //let cmd = 'ffmpeg -i input.mp4 -vf drawtext="fontfile=Xpressive.ttf: text='placeholder': fontcolor=white: fontsize=24: box=1: boxcolor=black@0.5: boxborderw=5: x=(w-text_w)/3: y=(h-text_h)*2/3" -codec:a copy output.mp4';
-        // cmd.replace('placeholder', payload.text);
-        //let input = './public/videoInput/' + payload.fileName;
-        //let output = './public/videoOutput/' + payload.fileName;
         let input = './public/videoInput/' + payload.fileName;
         let output = './public/videoOutput/' + payload.fileName;
-        execFile('./runffmpeg.sh', [payload.text, input, output ], function(error, stdout, stderr){
+        // args: text, inputSource, outputSource, startTime (00:00:03), duration(00:00:08)
+        let startTime = '00:00:03';
+        let duration = '00:00:08';
+        let text = payload.text ? payload.text : ' ';
+        execFile('./runffmpeg.sh', [text, input, output, startTime, duration], function(error, stdout, stderr){
             if (error) {
+                console.log("error: ", error);
                 callback(error, null);
             } else {
                 //fs.unlinkSync(__dirname + '/../public/videoInput/' + payload.fileName);

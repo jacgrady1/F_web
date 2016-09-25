@@ -73,13 +73,13 @@ class Video extends React.Component {
         if (this.state.fileName) {
             return (
                 <div className="row">
-                    <div className="col-md-5">
+                    <div className="col-md-9">
                         <input type="text"
                             className="form-control"
                             onKeyPress={this.handleInputTextChange}
                             placeholder="Enter text on video" />
                     </div>
-                    <div className="col-md-1">
+                    <div className="col-md-3">
                         <button className='btn btn-primary' onClick={this.handleRenderClick}> Render </button>
                     </div>
                 </div>
@@ -113,8 +113,14 @@ class Video extends React.Component {
             <div className="container">
                 <h2>Video</h2>
                     {this.renderUrlInputs()}
-                    {this.renderVideo()}
-                    {this.renderTextInputs()}
+                    <div className="row">
+                        <div className="col-md-6">
+                            {this.renderVideo()}
+                        </div>
+                        <div className="col-md-3">
+                            {this.renderTextInputs()}
+                        </div>
+                    </div>
                     {this.renderOutPutVideo()}
             </div>
         );
