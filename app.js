@@ -12,7 +12,7 @@ const app = new Fluxible({
 
 app.plug(fetchrPlugin({
     xhrPath: '/_api',
-    xhrTimeout: 30000
+    xhrTimeout: 300000
 }));
 app.plug(devToolsPlugin());
 
