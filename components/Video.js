@@ -10,17 +10,23 @@ class Video extends React.Component {
         this.state = {
             fileName: props.fileName,
             title: props.title,
-            outputFileName: props.outputFileName
+            outputFileName: props.outputFileName,
+            startTime: props.startTime.length !== 0 ? props.startTime : '0:0',
+            endTime: props.endTime
         };
         this.handleRenderClick = this.handleRenderClick.bind(this);
         this.handleInputUrlPress = this.handleInputUrlPress.bind(this);
         this.handleInputTextChange = this.handleInputTextChange.bind(this);
+        this.handleInputStartTime = this.handleInputStartTime.bind(this);
+        this.handleInputEndTime = this.handleInputEndTime.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
             fileName: nextProps.fileName,
             title: nextProps.title,
-            outputFileName: nextProps.outputFileName
+            outputFileName: nextProps.outputFileName,
+            startTime: nextProps.startTime,
+            endTime: nextProps.endTime
         });
         this.refs.video.load();
         this.refs.renderedVideo.load();
@@ -28,13 +34,24 @@ class Video extends React.Component {
     handleRenderClick() {
         let fileName = this.state.fileName;
         let text = this.state.text;
+        let startTime = this.state.startTime;
+        let endTime = this.state.endTime;
         this.context.executeAction(VideoActions.renderVideo, {
             text: text,
-            fileName: fileName
+            fileName: fileName,
+            startTime: startTime,
+            endTime: endTime
         });
     }
-    handleDownloadClick() {
-
+    handleInputStartTime(e) {
+        this.setState({
+            startTime: e.target.value
+        });
+    }
+    handleInputEndTime(e) {
+        this.setState({
+            endTime: e.target.value
+        });
     }
     handleInputUrlPress(e) {
         if (e.key === 'Enter') {
@@ -72,15 +89,32 @@ class Video extends React.Component {
     renderTextInputs() {
         if (this.state.fileName) {
             return (
-                <div className="row">
-                    <div className="col-md-9">
-                        <input type="text"
-                            className="form-control"
-                            onKeyPress={this.handleInputTextChange}
-                            placeholder="Enter text on video" />
+                <div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <input type="text"
+                                className="form-control"
+                                onChange={this.handleInputTextChange}
+                                placeholder="Enter text on video" />
+                        </div>
                     </div>
-                    <div className="col-md-3">
-                        <button className='btn btn-primary' onClick={this.handleRenderClick}> Render </button>
+                    <br/>
+                    <div className="row">
+                        <div className="col-md-2">
+                            <input type="text"
+                                className="form-control"
+                                onChange={this.handleInputStartTime}
+                                placeholder={this.state.startTime} />
+                        </div>
+                        <div className="col-md-2">
+                            <input type="text"
+                                className="form-control"
+                                onChange={this.handleInputEndTime}
+                                placeholder={this.state.endTime} />
+                        </div>
+                        <div className="col-md-2">
+                            <button className='btn btn-primary' onClick={this.handleRenderClick}> Render </button>
+                        </div>
                     </div>
                 </div>
             );
@@ -113,14 +147,11 @@ class Video extends React.Component {
             <div className="container">
                 <h2>Video</h2>
                     {this.renderUrlInputs()}
-                    <div className="row">
-                        <div className="col-md-6">
-                            {this.renderVideo()}
-                        </div>
-                        <div className="col-md-3">
-                            {this.renderTextInputs()}
-                        </div>
-                    </div>
+                    <br/>
+                    {this.renderVideo()}
+                    <br/>
+                    {this.renderTextInputs()}
+                    <br/>
                     {this.renderOutPutVideo()}
             </div>
         );
@@ -134,7 +165,9 @@ Video.contextTypes = {
 Video = connectToStores(Video, [VideoStore], (context, props) => ({
     title: context.getStore(VideoStore).getTitle(),
     fileName: context.getStore(VideoStore).getFileName(),
-    outputFileName: context.getStore(VideoStore).getOutputFileName()
+    outputFileName: context.getStore(VideoStore).getOutputFileName(),
+    startTime: context.getStore(VideoStore).getStartTime(),
+    endTime: context.getStore(VideoStore).getEndTime()
 }));
 
 export default Video;

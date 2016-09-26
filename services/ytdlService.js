@@ -2,17 +2,19 @@
 import fs from 'fs';
 import youtubedl from 'youtube-dl';
 import {fileSizeLimit, fileDurationLimit} from '../configs/configs';
-import {convert2Sec} from '../lib/timeUtils';
+import {convert2Sec, getDuration, convert2MinSecStr} from '../lib/timeUtils';
 import {execFile} from 'child_process';
+
 
 export default {
     name: 'ytdlService',
     create: function create(req, resource, params, payload, config, callback){
         let input = './public/videoInput/' + payload.fileName;
-        let output = './public/videoOutput/' + payload.fileName;
+        let outputFileName = Date.now() + payload.fileName
+        let output = './public/videoOutput/' + outputFileName;
         // args: text, inputSource, outputSource, startTime (00:00:03), duration(00:00:08)
-        let startTime = '00:00:03';
-        let duration = '00:00:08';
+        let startTime = payload.startTime;
+        let duration = getDuration(payload.startTime, payload.endTime);
         let text = payload.text ? payload.text : ' ';
         execFile('./runffmpeg.sh', [text, input, output, startTime, duration], function(error, stdout, stderr){
             if (error) {
@@ -21,7 +23,9 @@ export default {
             } else {
                 //fs.unlinkSync(__dirname + '/../public/videoInput/' + payload.fileName);
                 callback(null, {
-                    fileName: payload.fileName
+                    fileName: outputFileName,
+                    startTime: payload.startTime,
+                    endTime: payload.endTime
                 });
             }
 
@@ -35,6 +39,7 @@ export default {
                 callback(err, null);
             }
             let duration = convert2Sec(info.duration);
+            let endTime = convert2MinSecStr(duration);
             let fileTitle = info.title;
             if (duration > fileDurationLimit) {
                 // video too long
@@ -49,8 +54,10 @@ export default {
                 video.on('end', function() {
                     console.log('finished downloading!');
                     callback(null, {
-                      title: fileTitle,
-                      fileName: fileName
+                        title: fileTitle,
+                        fileName: fileName,
+                        startTime: '0:0',
+                        endTime: endTime
                   });
               });
             }

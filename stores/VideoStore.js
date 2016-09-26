@@ -6,18 +6,30 @@ class VideoStore extends BaseStore {
         this.fileName = '';
         this.title = '';
         this.outputFileName = '';
+        this.startTime = '';
+        this.endTime = '';
     }
     handleVideoLoad (payload) {
         this.fileName = payload.fileName;
         this.title = payload.title;
+        this.startTime = payload.startTime;
+        this.endTime = payload.endTime;
         this.emitChange();
     }
     handleVideoRender(payload){
         this.outputFileName = payload.fileName;
+        this.startTime = payload.startTime;
+        this.endTime = payload.endTime;
         this.emitChange();
     }
     getOutputFileName() {
         return this.outputFileName;
+    }
+    getStartTime() {
+        return this.startTime;
+    }
+    getEndTime() {
+        return this.endTime;
     }
     getTitle() {
         return this.title;
@@ -29,13 +41,17 @@ class VideoStore extends BaseStore {
         return {
             fileName: this.fileName,
             title: this.title,
-            outputFileName: this.outputFileName
+            outputFileName: this.outputFileName,
+            startTime: this.startTime,
+            endTime: this.endTime
         };
     }
     rehydrate(state) {
         this.fileName = state.fileName;
         this.title = state.title;
         this.outputFileName = state.outputFileName;
+        this.startTime = state.startTime;
+        this.endTime = state.endTime;
     }
 }
 
