@@ -104,12 +104,14 @@ class Video extends React.Component {
                             <input type="text"
                                 className="form-control"
                                 onChange={this.handleInputStartTime}
+                                value={this.state.startTime}
                                 placeholder={this.state.startTime} />
                         </div>
                         <div className="col-md-2">
                             <input type="text"
                                 className="form-control"
                                 onChange={this.handleInputEndTime}
+                                value={this.state.endTime}
                                 placeholder={this.state.endTime} />
                         </div>
                         <div className="col-md-2">
