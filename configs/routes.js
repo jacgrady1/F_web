@@ -7,7 +7,7 @@ export default {
     //     handler: require('../components/Home')
     // },
     video: {
-        path: '/video',
+        path: '/',
         method: 'get',
         page: 'video',
         title: 'Video',
