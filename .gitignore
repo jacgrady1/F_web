@@ -9,5 +9,5 @@ node_modules/
 *.map
 /results/
 *.mp4
-/build/
+/build/*
 .remote-sync.json
