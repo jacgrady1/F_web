@@ -126,6 +126,7 @@ class Video extends React.Component {
     }
     renderOutPutVideo() {
         let src = '/assets/videoOutput/' + this.state.outputFileName;
+        let downloadName = this.state.text ? this.state.text.replace(' ', '_') + '.mp4' : this.state.title.replace(' ', '_') + '.mp4';
         if (this.state.outputFileName) {
             return (
                 <div>
@@ -135,7 +136,7 @@ class Video extends React.Component {
                         </video>
                     </div>
                     <div>
-                        <a className="btn btn-primary" href={src} role="button" download>Download</a>
+                        <a className="btn btn-primary" href={src} role="button" download={downloadName}>Download</a>
                     </div>
                 </div>
             );
@@ -171,5 +172,9 @@ Video = connectToStores(Video, [VideoStore], (context, props) => ({
     startTime: context.getStore(VideoStore).getStartTime(),
     endTime: context.getStore(VideoStore).getEndTime()
 }));
+
+Video.defaultProps = {
+    title: 'defaultTitle'
+};
 
 export default Video;
