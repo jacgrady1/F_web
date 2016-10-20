@@ -47,7 +47,7 @@ export default {
             } else {
                 var video = youtubedl(params.url,
                   // Optional arguments passed to youtube-dl.
-                  ['--format=18'],
+                  ['--format=22'],
                   // Additional options can be given for calling `child_process.execFile()`.
                   { cwd: __dirname });
                 video.pipe(fs.createWriteStream(__dirname + '/../public/videoInput/' + fileName));
