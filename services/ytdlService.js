@@ -4,10 +4,12 @@ import youtubedl from 'youtube-dl';
 import {fileSizeLimit, fileDurationLimit} from '../configs/configs';
 import {convert2Sec, getDuration, convert2MinSecStr} from '../lib/timeUtils';
 import {execFile} from 'child_process';
-
+import ossService from './ossService';
 
 export default {
     name: 'ytdlService',
+
+    // this is to render video
     create: function create(req, resource, params, payload, config, callback){
         let input = './public/videoInput/' + payload.fileName;
         let outputFileName = Date.now() + payload.fileName
@@ -22,15 +24,22 @@ export default {
                 callback(error, null);
             } else {
                 //fs.unlinkSync(__dirname + '/../public/videoInput/' + payload.fileName);
-                callback(null, {
-                    fileName: outputFileName,
-                    startTime: payload.startTime,
-                    endTime: payload.endTime
+
+                ossService.create(req, {}, {}, {path: output, fileName: outputFileName}, {}, (ossErr, data) => {
+                    console.log("outputFileName: ", outputFileName);
+                    callback(null, {
+                        fileName: outputFileName,
+                        startTime: payload.startTime,
+                        endTime: payload.endTime
+                    });
                 });
+
             }
 
         });
     },
+
+    // this is to download youtube video
     read: function(req, resource, params, config, callback) {
         let fileName = params.id + '.mp4';
         youtubedl.getInfo(params.url, function(err, info) {

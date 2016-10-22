@@ -20,6 +20,7 @@ import { createElementWithContext } from 'fluxible-addons-react';
 
 //services
 import ytdlService from './services/ytdlService';
+import ossService from './services/ossService';
 
 const env = process.env.NODE_ENV;
 
@@ -32,6 +33,7 @@ const fetchrPlugin = app.getPlugin('FetchrPlugin');
 
 // Register our services
 fetchrPlugin.registerService(ytdlService);
+fetchrPlugin.registerService(ossService);
 
 server.use(compression());
 server.use(bodyParser.json());
