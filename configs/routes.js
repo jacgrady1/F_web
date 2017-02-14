@@ -12,6 +12,13 @@ export default {
         page: 'video',
         title: 'Video',
         handler: require('../components/Video')
+    },
+    keywords: {
+        path: '/keywords',
+        method: 'get',
+        page: 'keywords',
+        title: 'Keywords',
+        handler: require('../components/Keywords')
     }
     // audio: {
     //     path: '/audio',
